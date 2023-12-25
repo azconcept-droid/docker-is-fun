@@ -32,7 +32,7 @@ docker ps -a
 ```
 docker images
 ```
-> output: hello-world          latest    d2c94e258dcb   7 months ago   13.3kB
+> output: hello-world          latest    d2c94e258dcb   7 months ago   13.3kB  
 > only one image present which was downloaded from the installation script
 
  
