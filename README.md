@@ -35,4 +35,19 @@ docker images
 > output: hello-world          latest    d2c94e258dcb   7 months ago   13.3kB  
 > only one image present which was downloaded from the installation script
 
- 
+Persist DB
+===
+
++ create volume to mount
+```
+docker volume create todo-db
+```
++ Run the container and mount the volume
+```
+docker run -dp 127.0.0.1:5000:3000 --mount type=volume,src=todo-db,target=/etc/todos todo-app
+```
++ Know where your volume is mounted on host
+```
+docker volume inspect todo-db
+```
+
