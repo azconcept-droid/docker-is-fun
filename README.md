@@ -37,7 +37,7 @@ docker images
 
 Persist DB
 ===
-
+**Volume mount**
 + create volume to mount
 ```
 docker volume create todo-db
@@ -50,4 +50,24 @@ docker run -dp 127.0.0.1:5000:3000 --mount type=volume,src=todo-db,target=/etc/t
 ```
 docker volume inspect todo-db
 ```
+
+**Bind mount**
+- cd into the todo-app directory and run this command
+```
+docker run -dp 127.0.0.1:3000:3000 \
+    -w /app --mount type=bind,src="$(pwd)",target=/app \
+    node:18-alpine \
+    sh -c "yarn install && yarn run dev"
+```
+- You can watch the logs using docker logs <container-id>
+```
+docker logs -f <container-id>
+```
+- Type 127.0.0.1:3000 on your browser to see todo-app running.
+- Change 'Add' to 'Add Item' on line 109 in file app.js using this command to open the file location
+```
+nano src/static/js/app.js
+```
+> Note: make sure you are in the todo-app directory
+- Type 127.0.0.1:3000 on your browser to see the update.
 
