@@ -1,43 +1,63 @@
 # docker-is-fun
-
 1. Download this repo to your home directory
 
 ```
 git clone https://github.com/azconcept-droid/docker-is-fun.git
 ```
-
 2. Run the docker installation script
 ```
 bash ~/docker-is-fun/docker-installation-script
 ```
-
 3. Add docker to sudoer group
 ```
 sudo groupadd docker
 sudo usermod -aG docker $USER
 newgrp docker
 ```
-
 4. Check the version of docker installed
 ```
 docker -v
 ```
-
 5. Check if any container is running or has been stopped
 ```
 docker ps -a
 ```
-
 6. Check the docker images present
 ```
 docker images
 ```
 > output: hello-world          latest    d2c94e258dcb   7 months ago   13.3kB  
 > only one image present which was downloaded from the installation script
+7. cd into the todo-app directory
+```
+cd ~/docker-is-fun/todo-app
+```
+8. Build the container to run the todo-app from the Dockerfile
+```
+docker build -t todo-app .
+```
+9. Check if the image was built
+```
+docker images
+```
+10. Run a container using the just built image
+```
+docker run -dp 127.0.0.1:5000:3000 todo-app
+```
+11. Check if the todo-app is up and running
+```
+docker ps
+```
+11. Access the app on the web browser
+```
+127.0.0.1:5000
+```
+> Note: if there is a running process using port 5000 the command will fail.  
 
 Persist DB
 ===
-**Volume mount**
+Volume mount
+---
 + create volume to mount
 ```
 docker volume create todo-db
@@ -51,7 +71,8 @@ docker run -dp 127.0.0.1:5000:3000 --mount type=volume,src=todo-db,target=/etc/t
 docker volume inspect todo-db
 ```
 
-**Bind mount**
+Bind mount
+---
 - cd into the todo-app directory and run this command
 ```
 docker run -dp 127.0.0.1:3000:3000 \
@@ -77,7 +98,8 @@ There are two ways to connect multiple containers
 - Assign the network when starting the container
 - Connect an already running container to a network
 
-### Assign the network when starting the container
+Assign the network when starting the container
+---
 1. Create the network
 ```
 docker network create todo-app
