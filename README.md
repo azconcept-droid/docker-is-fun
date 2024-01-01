@@ -149,4 +149,68 @@ Add some content to your app.
 docker exec -it <mysql-container-id> mysql -p todos
 ```
 In the mysql shell, runn the following:
-mysql> select * from todo_items;
+> mysql> select * from todo_items;
+
+Use Docker Compose
+===
+Create the compose file
+---
+1. cd into the todo-app directory ~/docker-is-fun/todo-app
+```
+cd ~/docker-is-fun/todo-app
+```
+2. Open the compose file
+```
+vim compose.yml
+```
+3. Add this:
+```
+services:
+  app:
+    image: node:18-alpine
+    command: sh -c "yarn install && yarn run dev"
+    ports:
+      - 127.0.0.1:3000:3000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    environment:
+      MYSQL_HOST: mysql
+      MYSQL_USER: root
+      MYSQL_PASSWORD: secret
+      MYSQL_DB: todos
+
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - todo-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: todos
+
+volumes:
+  todo-mysql-data:
+```
+4. Ensure the compose file is in the todo-app directory
+```
+tree -x ~/docker-is-fun/todo-app
+```
+Run the appication stack
+---
+1. Make sure no other copies of the conatiner are runnging
+```
+docker ps
+```
+2. Stop the running container
+```
+docker rm -f <container-id>
+```
+3. Now run the application stack
+```
+docker compose up -d
+```
+Tear all down
+---
+```
+docker compose down --volumes
+```
