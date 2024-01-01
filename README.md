@@ -62,6 +62,11 @@ Volume mount
 ```
 docker volume create todo-db
 ```
++ stop the former running container
+```
+docker rm -f <container id>
+```
+> use: *docker ps* to see the conatiner id for the todo-app  
 + Run the container and mount the volume
 ```
 docker run -dp 127.0.0.1:5000:3000 --mount type=volume,src=todo-db,target=/etc/todos todo-app
