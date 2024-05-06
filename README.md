@@ -214,3 +214,5 @@ Tear all down
 ```
 docker compose down --volumes
 ```
+
+keep this command here: docker system df -v
