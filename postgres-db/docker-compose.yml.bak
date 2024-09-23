@@ -1,0 +1,62 @@
+# Use postgres/example user/password credentials
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    container_name: postgresql
+    restart: always
+    # set shared memory limit when using docker-compose
+    # shm_size: 128mb
+    # or set shared memory limit when deploy via swarm stack
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+      - ./initdb:/docker-entrypoint-initdb.d
+    #  - type: tmpfs
+    #    target: /dev/shm
+    #    tmpfs:
+    #      size: 134217728 # 128*2^20 bytes = 128Mb
+    environment:
+      POSTGRES_USER: winnov8
+      POSTGRES_PASSWORD: X9khTgSzvqZrMi6WPUtIyAbywUyvjgkd
+      POSTGRES_DB: winnov8_db
+    ports:
+      - 5432:5432
+    networks:
+      - postgress_network
+    # depends_on:
+    #   - phpmyadmin
+
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    environment:
+      # PMA_ARBITRARY: 1
+      PMA_PORT: 5432
+      PMA_HOST: postgresql
+    ports:
+      - 8083:80
+    networks:
+      - postgress_network
+  
+  # pgAdmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgAdmin
+  #   restart: always
+  #   ports:
+  #     - 8090:80
+  #   volumes:
+  #     - pgadmin_volume:/var/lib/pgadmin
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: user@domain.com
+  #     PGADMIN_DEFAULT_PASSWORD: SuperSecret
+  #   networks:
+  #     - postgress_network
+
+volumes:
+  postgres_volume:
+  pgadmin_volume:
+
+networks:
+  postgress_network:

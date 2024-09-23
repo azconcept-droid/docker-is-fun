@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:5.6
+    container_name: mysql-processmaker
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql-processmaker-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: passwrd@123
+    networks:
+      - processmaker-network
+
+volumes:
+  mysql-processmaker-data:
+
+networks:
+  processmaker-network:
+
+# User www-data
+# passwrd: process@maker

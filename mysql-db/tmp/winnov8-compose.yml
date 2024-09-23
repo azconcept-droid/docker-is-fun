@@ -1,0 +1,22 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    volumes:
+      - winnov8-mysql-data:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: winnov8-db
+      MYSQL_USER: azeez
+      MYSQL_PASSWORD: passwrd
+      MYSQL_ROOT_PASSWORD: passwrd@123
+    networks:
+      - mysql-winnov8
+
+volumes:
+  winnov8-mysql-data:
+
+networks:
+  mysql-winnov8:
