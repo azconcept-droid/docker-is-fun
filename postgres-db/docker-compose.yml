@@ -7,7 +7,7 @@ services:
     container_name: postgresql
     restart: always
     volumes:
-      - postgres_volume:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: winnov8
       POSTGRES_PASSWORD: X9khTgSzvqZrMi6WPUtIyAbywUyvjgkd
@@ -24,7 +24,7 @@ services:
     ports:
       - 5050:80
     volumes:
-      - pgadmin_volume:/var/lib/pgadmin
+      - pgadmin-data:/var/lib/pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: admin@admin.com
       PGADMIN_DEFAULT_PASSWORD: root
@@ -32,8 +32,8 @@ services:
       - postgress_network
 
 volumes:
-  postgres_volume:
-  pgadmin_volume:
+  postgres-data:
+  pgadmin-data:
 
 networks:
   postgress_network:
