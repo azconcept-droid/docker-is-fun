@@ -12,6 +12,22 @@ services:
       MYSQL_USER: moriafund_dev
       MYSQL_PASSWORD: moriafund_dev_pwd
       MYSQL_DATABASE: moriafund_dev_db
+    networks:
+      - mysql_network
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    environment:
+      - PMA_HOST=mysql
+      - PMA_PORT=3306
+    ports:
+      - 8080:80
+    restart: always
+    networks:
+      - mysql_network
 
 volumes:
   mysql-data:
+
+networks:
+  mysql_network:
