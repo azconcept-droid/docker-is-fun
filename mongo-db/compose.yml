@@ -1,0 +1,15 @@
+services:
+  mongo:
+    image: mongo:4
+    restart: always
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    # environment:
+    #   MONGO_INITDB_ROOT_USERNAME: yalect
+    #   MONGO_INITDB_ROOT_PASSWORD: mongo@1234
+    volumes:
+      - mongo-data:/data/db/
+
+volumes:
+  mongo-data:
