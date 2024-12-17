@@ -13,7 +13,7 @@ services:
       POSTGRES_PASSWORD: clozagent@passwd
       POSTGRES_DB: clozagent_db
     ports:
-      - 5433:5432
+      - 5432:5432
     networks:
       - clozagent_network
   
