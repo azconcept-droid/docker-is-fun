@@ -1,0 +1,39 @@
+# Use postgres/example user/password credentials
+version: '3.9'
+
+services:
+  postgres:
+    image: postgres
+    container_name: clozagent-db
+    restart: always
+    volumes:
+      - clozagent-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: clozagent
+      POSTGRES_PASSWORD: clozagent@passwd
+      POSTGRES_DB: clozagent_db
+    ports:
+      - 5433:5432
+    networks:
+      - clozagent_network
+  
+  pgAdmin:
+    image: dpage/pgadmin4
+    container_name: clozagent-db-ui
+    restart: always
+    ports:
+      - 5051:80
+    volumes:
+      - clozagent-pgadmin-data:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    networks:
+      - clozagent_network
+
+volumes:
+  clozagent-data:
+  clozagent-pgadmin-data:
+
+networks:
+  clozagent_network:
