@@ -22,5 +22,18 @@ sudo chmod +x /usr/local/bin/docker-compose
 # Verify installation
 docker-compose --version
 
+# Create the CLI plugins directory if it doesn't exist
+mkdir -p ~/.docker/cli-plugins/
+
+# Download the latest buildx binary
+BUILDX_VERSION=$(curl -s https://api.github.com/repos/docker/buildx/releases/latest | grep '"tag_name"' | sed -E 's/.*"v([^"]+)".*/\1/')
+curl -Lo ~/.docker/cli-plugins/docker-buildx "https://github.com/docker/buildx/releases/download/v${BUILDX_VERSION}/buildx-v${BUILDX_VERSION}.linux-amd64"
+
+# Make it executable
+chmod +x ~/.docker/cli-plugins/docker-buildx
+
+# Verify the installation
+docker buildx version
+
 # Apply the group change
 newgrp docker
